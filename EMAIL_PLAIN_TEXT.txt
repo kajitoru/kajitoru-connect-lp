@@ -1,0 +1,199 @@
+【件名】KAJITORU CONNECT LP - AWS EC2 デプロイ依頼
+
+村嶋さんへ
+
+お疲れ様です、白井です。
+
+Zoom背景のQRコードから流入するランディングページ「KAJITORU CONNECT」の AWS デプロイをお願いしたいのですが、対応いただけますでしょうか。
+
+---
+
+■ 依頼内容
+
+プロジェクト： KAJITORU CONNECT LP - AWS EC2 デプロイ
+対象： ランディングページ（Next.js）
+デプロイ先： AWS EC2 t2.micro（無料枠）
+所要時間： 約 45～60分
+月額コスト： ¥0～500（AWS 無料枠利用）
+
+---
+
+■ 前提条件（デプロイ前に確認）
+
+□ AWS アカウントにログイン可能
+□ IAM ユーザーが EC2・Route 53 アクセス権あり
+□ SSH クライアント（Mac は標準、Windows は PuTTY など）
+□ Git コマンドラインツール
+
+---
+
+■ リポジトリ情報
+
+GitHub リポジトリ：
+https://github.com/your-org/kajitoru-connect-lp
+
+クローン方法：
+$ git clone https://github.com/your-org/kajitoru-connect-lp.git
+$ cd kajitoru-connect-lp
+
+---
+
+■ デプロイ手順
+
+詳細な手順書を作成しました。GitHub リポジトリ内の以下のファイルを参照してください：
+
+📄 AWS_DEPLOY_FOR_MURAJIMA.md
+
+このファイルに Phase 1～6 までの詳細なステップが記載されています。
+
+---
+
+■ 簡略版フロー
+
+Phase 1: AWS EC2 インスタンス起動（10分）
+  └─ t2.micro、キーペア取得、セキュリティグループ設定
+
+Phase 2: サーバー初期設定（10分）
+  └─ Node.js、Nginx、PM2 インストール
+
+Phase 3: アプリケーションデプロイ（10分）
+  └─ git clone、npm install、npm run build
+
+Phase 4: Nginx リバースプロキシ設定（10分）
+  └─ :3000 → :80 ポート転送
+
+Phase 5: PM2 自動起動設定（5分）
+  └─ 永続化、サーバー再起動時の自動起動
+
+Phase 6: DNS 設定（5分）
+  └─ Route 53 で connect.kajitoru.jp を割り当て
+
+テスト・確認（5分）
+  └─ ブラウザ・フォーム・URLパラメータ計測テスト
+
+合計： 45～60分
+
+---
+
+■ 完了確認項目
+
+デプロイ完了後、以下を確認してください：
+
+□ https://connect.kajitoru.jp でアクセス可能
+□ Hero セクション（ファーストビュー）が表示される
+□ フォーム入力・送信できる
+□ ブラウザ console に ログが出力される
+□ URLパラメータ（?from=shinji）が計測される
+□ モバイル表示で正常か
+□ PM2 status が online 状態
+
+---
+
+■ 重要な注意事項
+
+1. キーペア（.pem）は絶対に紛失しないこと
+   - 失くしたら EC2 にアクセス不可
+   - GitHub に push してはいけません
+
+2. セキュリティグループの設定
+   - SSH (22) は信頼できる IP のみに制限推奨
+   - HTTP/HTTPS (80/443) は全許可でOK
+
+3. AWS 無料枠の確認
+   - 初年度はほぼ無料
+   - 2年目以降も t2.micro なら月 ¥1,500～2,000
+
+4. トラブル時のログ確認コマンド
+   $ pm2 logs kajitoru-connect
+   $ sudo tail -f /var/log/nginx/error.log
+
+---
+
+■ トラブル時の対応
+
+手順書の「トラブルシューティング」セクションを参照してください。
+
+以下のような問題が記載されています：
+  - 「接続がタイムアウトした」
+  - 「npm install でエラー」
+  - 「PM2 で起動しない」
+  - 「ディスク容量不足」
+  - 「Nginx が起動しない」
+
+解決しない場合は、Slack で以下をお送りください：
+  1. エラーメッセージ（スクリーンショット）
+  2. ログ出力結果
+  3. デプロイのどこまで完了したか
+  4. 使用しているOS（Mac / Linux / Windows）
+
+それに基づいて対応させていただきます。
+
+---
+
+■ デプロイ後の次ステップ
+
+1. QRコード生成
+   https://connect.kajitoru.jp?from=shinji&utm_source=zoom&utm_medium=qr&utm_campaign=online_meeting_2026
+
+2. Zoom背景に埋め込み
+
+3. オンライン会議で運用開始
+
+4. 流入計測・レポート作成
+
+---
+
+■ スケジュール
+
+本日：         本メール送信
+明日～明後日： デプロイ実施（45～60分）
+完了報告：     Slack または メール
+本番運用開始： 翌週月曜日（予定）
+
+---
+
+■ 参考資料（GitHub リポジトリ内）
+
+- AWS_DEPLOY_FOR_MURAJIMA.md    ← メインの手順書（必須）
+- SETUP_GUIDE.md                ← ファイル配置方法
+- README.md                     ← プロジェクト説明
+- FILE_CHECKLIST.txt            ← チェックリスト
+- IMPLEMENTATION_SUMMARY.md     ← 実装完了サマリー
+
+---
+
+■ 連絡方法
+
+ご不明な点やトラブルがある場合は、Slack でお知らせください。
+@白井 宛に mention でも、DM でも構いません。
+
+---
+
+■ 最後に
+
+このランディングページは、Zoom背景のQRコード経由でフリーランス・複業人材とつながる施策になります。完成したら、かなり面白い仕組みになると思っています。
+
+手数ですが、デプロイのほうよろしくお願いいたします。
+
+何かご質問があれば、いつでもお知らせください。
+
+---
+
+村嶋さんへの依頼内容をまとめると：
+
+1. GitHub からリポジトリをクローン
+2. AWS_DEPLOY_FOR_MURAJIMA.md に従ってデプロイ
+3. https://connect.kajitoru.jp で動作確認
+4. 完了報告
+
+所要時間： 45～60分
+月額コスト： ¥0～500
+難易度： 中級
+
+よろしくお願いいたします。
+
+---
+
+白井 覚三
+代表取締役 & グループ CEO
+株式会社カジトル
