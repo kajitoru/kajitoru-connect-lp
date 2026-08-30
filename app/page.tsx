@@ -1,3 +1,4 @@
+import { Suspense } from 'react'
 import Hero from '@/components/Hero'
 import CareerPath from '@/components/CareerPath'
 import ExploreKajitoru from '@/components/ExploreKajitoru'
@@ -14,7 +15,9 @@ export default function Home() {
       <ExploreKajitoru />
       <About />
       <StayConnected />
-      <ConnectForm />
+      <Suspense fallback={null}>
+        <ConnectForm />
+      </Suspense>
       <Footer />
     </main>
   )
